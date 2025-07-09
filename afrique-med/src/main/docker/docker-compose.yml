@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.3
+    container_name: keycloakAfriqueMed
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_HTTP_ENABLED=true
+
+    ports:
+      - "8180:8080"  # Use port 8180 for http
+      - "8543:8443"  # Expose port 8543 to 8443 inside the container (https)
+    volumes:
+      - "C:/Users/Mega_PC/Desktop/afrique-med/afrique-med/config/keycloak-keystore.jks:/etc/keycloak-keystore.jks"  # Mount the keystore file
+    command: start-dev  #--hostname-strict=false --https-key-store-file=/etc/keycloak-keystore.jks
+    restart: unless-stopped
+  postgres:
+    image: postgres:16
+    container_name: AfriqueMedDb
+    restart: always
+    environment:
+      POSTGRES_DB: afrique-med-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
