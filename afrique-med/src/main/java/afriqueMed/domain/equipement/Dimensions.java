@@ -1,5 +1,8 @@
 package afriqueMed.domain.equipement;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Dimensions {
     private float grossWeight;
     private float netWeight;

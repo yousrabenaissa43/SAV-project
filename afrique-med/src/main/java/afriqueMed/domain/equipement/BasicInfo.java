@@ -1,5 +1,8 @@
 package afriqueMed.domain.equipement;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class BasicInfo {
     private String name;
     private String description;

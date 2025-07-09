@@ -3,20 +3,35 @@ package afriqueMed.domain.historyLog;
 import afriqueMed.domain.Ticket.Intervention;
 import afriqueMed.domain.Ticket.Ticket;
 import afriqueMed.domain.users.User;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
 public class HistoryLog {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Ticket ticket;              // Nullable — when related to a Ticket
-    private Intervention intervention;  // Nullable — when related to an Intervention
-    private User user;                  // Actor who did the action
+    @ManyToOne(optional = true)
+    private Ticket ticket;
 
-    private ActionType action;      // Type of action
-    private String details;             // Optional technical/structured info
-    private String logMessage;          // Human-readable message
+    @ManyToOne(optional = true)
+    private Intervention intervention;
+
+    @ManyToOne(optional = false)
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    private ActionType action;
+
+    @Column(length = 1000)
+    private String details;
+
+    @Column(length = 1000)
+    private String logMessage;
+
     private LocalDateTime timestamp;
 
-    // Constructors, Getters, Setters, toString()
 }

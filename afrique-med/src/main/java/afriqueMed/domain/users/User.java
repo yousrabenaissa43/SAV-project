@@ -1,10 +1,17 @@
 package afriqueMed.domain.users;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    protected String keycloakId;
-    protected String CIN;
-    protected String name;
-    protected String address;
-    protected String phone;
-    protected String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String keycloakId;
+    private String CIN;
+    private String name;
+    private String address;
+    private String phone;
 }
