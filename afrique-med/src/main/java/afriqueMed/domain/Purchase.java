@@ -27,5 +27,7 @@ public class Purchase {
     @Lob
     private byte[] interventionSheet;  // Storing the file as binary
 
-
+    public Long getId() {
+        return id;
+    }
 }

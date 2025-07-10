@@ -14,4 +14,8 @@ public class User {
     private String name;
     private String address;
     private String phone;
+
+    public Long getId() {
+        return id;
+    }
 }

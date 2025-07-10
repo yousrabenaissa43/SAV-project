@@ -1,0 +1,45 @@
+package afriqueMed.infra.operations;
+
+import afriqueMed.domain.Ticket.Intervention;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+import java.util.List;
+
+@ApplicationScoped
+public class InterventionRepository {
+
+    @PersistenceContext
+    EntityManager em;
+
+    public void save(Intervention intervention) {
+        em.persist(intervention);
+    }
+
+    public Intervention findById(Long id) {
+        return em.find(Intervention.class, id);
+    }
+
+    public List<Intervention> findAll() {
+        return em.createQuery("SELECT i FROM Intervention i", Intervention.class).getResultList();
+    }
+
+    public void delete(Intervention intervention) {
+        em.remove(intervention);
+    }
+
+    public List<Intervention> findByTechnicianId(Long technicianId) {
+        return em.createQuery(
+                        "SELECT i FROM Intervention i WHERE i.technician.id = :technicianId", Intervention.class)
+                .setParameter("technicianId", technicianId)
+                .getResultList();
+    }
+
+    public Intervention findByTicketId(Long ticketId) {
+        return em.createQuery(
+                        "SELECT i FROM Intervention i WHERE i.ticket.id = :ticketId", Intervention.class)
+                .setParameter("ticketId", ticketId)
+                .getSingleResult();
+    }
+}

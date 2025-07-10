@@ -3,4 +3,8 @@
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$" />
   </component>
+  <component name="Quarkus Tools">
+    <option name="hash" value="358979190" />
+    <option name="version" value="1" />
+  </component>
 </module>
