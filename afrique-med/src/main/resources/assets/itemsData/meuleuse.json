@@ -1,0 +1,23 @@
+{
+  "basicinfo": {
+    "name": "Meuleuse",
+    "description": "Meuleuse Huvitz HPE-410",
+    "code": "HPE-410",
+    "brand": "Huvitz",
+    "model": "HPE-410",
+    "category": "Meuleuse",
+    "serial": 123456,
+    "image": "meuleuse.jpg"
+  },
+  "dimensions": {
+    "grossWeight": 10.5,
+    "netWeight": 9.8,
+    "volume": 0.03,
+    "length": 50.0,
+    "width": 40.0,
+    "height": 30.0
+  },
+  "installationDate": "2025-07-12T10:00:00",
+  "itemStatus": "INSTALLED",
+  "itemResponsibleSpeciality": "OPHTALMOLOGIE"
+}
