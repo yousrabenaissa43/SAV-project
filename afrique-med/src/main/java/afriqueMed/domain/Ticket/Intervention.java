@@ -30,5 +30,77 @@ public class Intervention {
 
     @ElementCollection
     @Lob
-    private List<byte[]> attachments;
+    private List<String> attachments;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public Technician getTechnician() {
+        return technician;
+    }
+
+    public void setTechnician(Technician technician) {
+        this.technician = technician;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public boolean isSetItemToBeDecommissioned() {
+        return setItemToBeDecommissioned;
+    }
+
+    public void setSetItemToBeDecommissioned(boolean setItemToBeDecommissioned) {
+        this.setItemToBeDecommissioned = setItemToBeDecommissioned;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getTechnicianNotes() {
+        return technicianNotes;
+    }
+
+    public void setTechnicianNotes(String technicianNotes) {
+        this.technicianNotes = technicianNotes;
+    }
+
+    public List<String> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<String> attachments) {
+        this.attachments = attachments;
+    }
 }

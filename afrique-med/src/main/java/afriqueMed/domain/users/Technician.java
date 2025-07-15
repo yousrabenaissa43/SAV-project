@@ -14,4 +14,28 @@ public class Technician extends User{
     private boolean isOnVacation;
     @Enumerated(EnumType.STRING)
     private CountryEnum location;
+
+    public List<Speciality> getSpecialities() {
+        return specialities;
+    }
+
+    public void setSpecialities(List<Speciality> specialities) {
+        this.specialities = specialities;
+    }
+
+    public boolean isOnVacation() {
+        return isOnVacation;
+    }
+
+    public void setOnVacation(boolean onVacation) {
+        isOnVacation = onVacation;
+    }
+
+    public CountryEnum getLocation() {
+        return location;
+    }
+
+    public void setLocation(CountryEnum location) {
+        this.location = location;
+    }
 }
