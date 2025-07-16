@@ -2,6 +2,7 @@ package afriqueMed.domain.Ticket;
 
 import afriqueMed.domain.CountryEnum;
 import afriqueMed.domain.Purchase;
+import afriqueMed.domain.users.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class Ticket {
     private TicketType ticketType;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Purchase purchase;
+    private User user ;
 
     private String location;
 
@@ -51,12 +52,12 @@ public class Ticket {
         this.ticketType = ticketType;
     }
 
-    public Purchase getPurchase() {
-        return purchase;
+    public User getUser() {
+        return user;
     }
 
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Priority getPriority() {

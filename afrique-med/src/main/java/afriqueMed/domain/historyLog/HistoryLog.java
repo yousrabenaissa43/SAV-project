@@ -27,9 +27,6 @@ public class HistoryLog {
     private ActionType action;
 
     @Column(length = 1000)
-    private String details;
-
-    @Column(length = 1000)
     private String logMessage;
 
     private LocalDateTime timestamp;
@@ -72,14 +69,6 @@ public class HistoryLog {
 
     public void setAction(ActionType action) {
         this.action = action;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
     }
 
     public String getLogMessage() {
