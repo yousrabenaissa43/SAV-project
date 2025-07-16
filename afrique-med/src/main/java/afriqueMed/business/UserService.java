@@ -1,5 +1,6 @@
 package afriqueMed.business;
 
+import afriqueMed.domain.users.Client;
 import afriqueMed.domain.users.User;
 import afriqueMed.infra.usersRepos.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,4 +30,38 @@ public class UserService{
             userRepository.delete(user);
         }
     }
+    @Transactional
+    public User getOrCreateUserFromKeycloak(String keycloakId, String name, String email, String phone) {
+        // 1. Check if user already exists
+        User existing = userRepository.findByKeycloakId(keycloakId);
+        if (existing != null) return existing;
+
+        // 2. Create new user (e.g. Client — you can customize this logic per role)
+        Client newUser = new Client();
+        newUser.setKeycloakId(keycloakId);
+        newUser.setName(name);
+        newUser.setPhone(phone);
+        newUser.setAddress("N/A"); // You can update this later
+        newUser.setCIN("N/A");     // Optional
+
+        userRepository.save(newUser);
+        return newUser;
+    }
+    @Transactional
+    public User updateUser(Long id, String keycloakId, String CIN, String name, String address, String phone) {
+        User user = userRepository.findById(id);
+        if (user == null) {
+            return null;
+        }
+
+        if (keycloakId != null) user.setKeycloakId(keycloakId);
+        if (CIN != null) user.setCIN(CIN);
+        if (name != null) user.setName(name);
+        if (address != null) user.setAddress(address);
+        if (phone != null) user.setPhone(phone);
+
+        userRepository.save(user);
+        return user;
+    }
+
 }

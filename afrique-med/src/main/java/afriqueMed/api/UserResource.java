@@ -1,6 +1,7 @@
 package afriqueMed.api;
 
 import afriqueMed.business.UserService;
+import afriqueMed.domain.DTO.UpdateUserRequest;
 import afriqueMed.domain.users.User;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -39,4 +40,22 @@ public class UserResource {
         userService.deleteUser(id);
         return Response.noContent().build();
     }
+    @PUT
+    @Path("/{id}")
+    public Response updateUser(@PathParam("id") Long id, UpdateUserRequest request) {
+        User updatedUser = userService.updateUser(
+                id,
+                request.keycloakId(),
+                request.CIN(),
+                request.name(),
+                request.address(),
+                request.phone()
+        );
+
+        if (updatedUser == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(updatedUser).build();
+    }
+
 }
