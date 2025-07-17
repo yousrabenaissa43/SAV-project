@@ -20,7 +20,7 @@ public class HistoryLog {
     @ManyToOne(optional = true)
     private Intervention intervention;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private User user;
 
     @Enumerated(EnumType.STRING)

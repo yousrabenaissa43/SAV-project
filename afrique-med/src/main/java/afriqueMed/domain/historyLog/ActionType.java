@@ -2,6 +2,8 @@ package afriqueMed.domain.historyLog;
 
 public enum ActionType {
     TICKET_CREATED,
+    INTERVENTION_CREATED,
+    TICKET_ACCEPTED,
     TICKET_STATUS_CHANGED,
     TICKET_ASSIGNED,
     TICKET_REFUSED,

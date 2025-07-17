@@ -4,6 +4,8 @@ public enum Status {
     OUVERT,
     EN_COURS,
     RESOLU,
-    FERME
+    FERME,
+    ACCEPTED,
+    REFUSED,
 }
 

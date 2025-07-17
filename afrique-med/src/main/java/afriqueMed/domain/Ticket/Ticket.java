@@ -17,10 +17,9 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private User user ;
-    @OneToOne
+    @ManyToOne(optional = false)
+    private User user;
+    @ManyToOne(optional = false)
     private Item item;
 
     private String location;
