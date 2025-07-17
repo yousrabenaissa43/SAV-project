@@ -4,9 +4,12 @@ import afriqueMed.domain.DTO.CreateTicketRequest;
 import afriqueMed.domain.Ticket.Priority;
 import afriqueMed.domain.Ticket.Status;
 import afriqueMed.domain.Ticket.Ticket;
+import afriqueMed.domain.equipement.Item;
 import afriqueMed.domain.historyLog.ActionType;
 import afriqueMed.domain.historyLog.HistoryLog;
 import afriqueMed.domain.users.Client;
+import afriqueMed.domain.users.User;
+import afriqueMed.infra.equipmentrepos.ItemRepository;
 import afriqueMed.infra.usersRepos.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -19,25 +22,34 @@ public class ClientService {
 
     @Inject
     TicketService ticketService;
-
     @Inject
     HistoryLogService historyLogService;
-
     @Inject
     UserRepository userRepository;
+    @Inject
+    ItemRepository itemRepository;
 
+    //tested
     @Transactional
     public Ticket createTicketForClient(Long clientId, CreateTicketRequest request) {
         // Get client
-        Client client = (Client) userRepository.findById(clientId);
-        if (client == null) {
+        User user = userRepository.findById(clientId);
+        if (user == null) {
+            System.out.println("User is null");
             throw new IllegalArgumentException("Client not found with ID: " + clientId);
+        }
+
+        //get item
+        Item item = itemRepository.findById(request.itemId());
+        if (item == null) {
+            throw new IllegalArgumentException("Item not found with ID: " + request.itemId());
         }
 
         // Build ticket
         Ticket ticket = new Ticket();
-        ticket.setUser(client);
+        ticket.setUser(user);
         ticket.setTicketType(request.ticketType());
+        ticket.setItem(item);
         ticket.setLocation(request.location());
         ticket.setDescription(request.description());
         ticket.setCountry(request.country());
@@ -52,10 +64,10 @@ public class ClientService {
         // Create a history log entry
         HistoryLog log = new HistoryLog();
         log.setTicket(ticket);
-        log.setUser(client);
+        log.setUser(user);
         log.setAction(ActionType.TICKET_CREATED);
         log.setLogMessage(
-                "Ticket (ID: " + ticket.getId() + ") was created by client \"" + client.getName() +
+                "Ticket (ID: " + ticket.getId() + ") was created by client \"" + user.getName() +
                         "\" on " + LocalDateTime.now()
         );
 

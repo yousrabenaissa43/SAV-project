@@ -1,7 +1,7 @@
 package afriqueMed.domain.Ticket;
 
 import afriqueMed.domain.CountryEnum;
-import afriqueMed.domain.Purchase;
+import afriqueMed.domain.equipement.Item;
 import afriqueMed.domain.users.User;
 import jakarta.persistence.*;
 
@@ -20,6 +20,8 @@ public class Ticket {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User user ;
+    @OneToOne
+    private Item item;
 
     private String location;
 
@@ -106,5 +108,13 @@ public class Ticket {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }
