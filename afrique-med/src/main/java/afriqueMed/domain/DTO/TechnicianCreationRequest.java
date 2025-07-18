@@ -5,11 +5,11 @@ import afriqueMed.domain.Speciality;
 
 import java.util.List;
 
-public class TechnicianCreationRequest {
-    public String keycloakId;
-    public String name;
-    public String phone;
-    public String cin;
-    public List<Speciality> specialties;
-    public CountryEnum location;
-}
+public record TechnicianCreationRequest(
+        String keycloakId,
+        String name,
+        String phone,
+        String cin,
+        List<Speciality> specialties,
+        CountryEnum location
+) {}

@@ -27,7 +27,7 @@ public class AuthResource {
         String keycloakId = keycloakService.getKeycloakId();
         String name = keycloakService.getUsername(); // or jwt.getClaim("name")
         String email = keycloakService.getEmail();
-        String phone = "00000000"; // You could extract this from Keycloak with a custom claim
+        String phone = "00000000";
 
         User user = userService.getOrCreateUserFromKeycloak(keycloakId, name, email, phone);
 

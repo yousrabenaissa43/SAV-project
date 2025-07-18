@@ -1,11 +1,10 @@
-package afriqueMed.api;
+package afriqueMed.api.usersResources;
 
 
 import afriqueMed.business.ManagerService;
 import afriqueMed.domain.Ticket.Intervention;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/api/manager")
@@ -40,4 +39,8 @@ public class ManagerResource {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
+    //set priority of tickets Or interventions ?
+
+
+    //
 }

@@ -1,4 +1,4 @@
-package afriqueMed.api;
+package afriqueMed.api.usersResources;
 
 
 import afriqueMed.business.ClientService;
@@ -6,7 +6,6 @@ import afriqueMed.domain.DTO.CreateTicketRequest;
 import afriqueMed.domain.Ticket.Ticket;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/api/client")

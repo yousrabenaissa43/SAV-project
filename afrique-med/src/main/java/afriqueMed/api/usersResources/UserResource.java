@@ -1,4 +1,4 @@
-package afriqueMed.api;
+package afriqueMed.api.usersResources;
 
 import afriqueMed.business.UserService;
 import afriqueMed.domain.DTO.TechnicianCreationRequest;
@@ -65,12 +65,12 @@ public class UserResource {
     @Transactional
     public Response createTechnician(TechnicianCreationRequest request) {
         Technician technician = userService.createTechnician(
-                request.keycloakId,
-                request.name,
-                request.phone,
-                request.cin,
-                request.specialties,
-                request.location
+                request.keycloakId(),
+                request.name(),
+                request.phone(),
+                request.cin(),
+                request.specialties(),
+                request.location()
         );
         return Response.ok(technician).build();
     }

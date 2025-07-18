@@ -42,4 +42,12 @@ public class InterventionRepository {
                 .setParameter("ticketId", ticketId)
                 .getSingleResult();
     }
+    public List<Intervention> findByTechnicianIdAndIsDoneFalse(Long technicianId) {
+        return em.createQuery(
+                        "SELECT i FROM Intervention i WHERE i.technician.id = :technicianId AND i.isDone = false",
+                        Intervention.class)
+                .setParameter("technicianId", technicianId)
+                .getResultList();
+    }
+
 }
