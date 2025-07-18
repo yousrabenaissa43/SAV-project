@@ -1,5 +1,6 @@
 package afriqueMed.infra.usersRepos;
 
+import afriqueMed.domain.CountryEnum;
 import afriqueMed.domain.users.Technician;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
@@ -33,14 +34,13 @@ public class TechnicianRepository {
         em.remove(em.contains(technician) ? technician : em.merge(technician));
     }
 
-    // Exemple : trouver les techniciens en vacances ou par localisation
     public List<Technician> findByVacationStatus(boolean isOnVacation) {
         return em.createQuery("SELECT t FROM Technician t WHERE t.isOnVacation = :vacation", Technician.class)
                 .setParameter("vacation", isOnVacation)
                 .getResultList();
     }
 
-    public List<Technician> findByLocation(String location) {
+    public List<Technician> findByLocation(CountryEnum location) {
         return em.createQuery("SELECT t FROM Technician t WHERE t.location = :location", Technician.class)
                 .setParameter("location", location)
                 .getResultList();

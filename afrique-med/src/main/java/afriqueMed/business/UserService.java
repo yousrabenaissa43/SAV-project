@@ -1,7 +1,13 @@
 package afriqueMed.business;
 
+import afriqueMed.domain.CountryEnum;
+import afriqueMed.domain.Speciality;
 import afriqueMed.domain.users.Client;
+import afriqueMed.domain.users.Technician;
 import afriqueMed.domain.users.User;
+import afriqueMed.infra.usersRepos.ClientRepository;
+import afriqueMed.infra.usersRepos.ManagerRepository;
+import afriqueMed.infra.usersRepos.TechnicianRepository;
 import afriqueMed.infra.usersRepos.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -14,6 +20,12 @@ public class UserService{
 
     @Inject
     UserRepository userRepository;
+    @Inject
+    TechnicianRepository technicianRepository;
+    @Inject
+    ManagerRepository managerRepository;
+    @Inject
+    ClientRepository clientRepository;
 
     public User getUser(Long id) {
         return userRepository.findById(id);
@@ -63,5 +75,25 @@ public class UserService{
         userRepository.save(user);
         return user;
     }
+    @Transactional
+    public Technician createTechnician(String keycloakId, String name, String phone, String cin, List<Speciality> specialties, CountryEnum location) {
+        User existing = userRepository.findByKeycloakId(keycloakId);
+        if (existing instanceof Technician technician) {
+            return technician;
+        }
+
+        Technician technician = new Technician();
+        technician.setKeycloakId(keycloakId);
+        technician.setName(name);
+        technician.setPhone(phone);
+        technician.setCIN(cin);
+        technician.setSpecialities(specialties);
+        technician.setLocation(location);
+        technicianRepository.save(technician);
+        return technician;
+    }
+
+
+
 
 }

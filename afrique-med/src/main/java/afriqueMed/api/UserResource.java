@@ -1,9 +1,12 @@
 package afriqueMed.api;
 
 import afriqueMed.business.UserService;
+import afriqueMed.domain.DTO.TechnicianCreationRequest;
 import afriqueMed.domain.DTO.UpdateUserRequest;
+import afriqueMed.domain.users.Technician;
 import afriqueMed.domain.users.User;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -56,6 +59,20 @@ public class UserResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(updatedUser).build();
+    }
+    @POST
+    @Path("/technicians/create")
+    @Transactional
+    public Response createTechnician(TechnicianCreationRequest request) {
+        Technician technician = userService.createTechnician(
+                request.keycloakId,
+                request.name,
+                request.phone,
+                request.cin,
+                request.specialties,
+                request.location
+        );
+        return Response.ok(technician).build();
     }
 
 }
