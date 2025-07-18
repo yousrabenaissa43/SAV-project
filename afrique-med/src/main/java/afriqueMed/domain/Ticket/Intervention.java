@@ -1,5 +1,6 @@
 package afriqueMed.domain.Ticket;
 
+import afriqueMed.domain.equipement.Item;
 import afriqueMed.domain.users.Technician;
 import jakarta.persistence.*;
 
@@ -13,8 +14,8 @@ public class Intervention {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
-    private Ticket ticket;
+    @ManyToOne(optional = true)
+    private Item item;
 
     @ManyToOne(optional = false)
     private Technician technician;
@@ -40,12 +41,12 @@ public class Intervention {
         this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Item getItem() {
+        return item;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public Technician getTechnician() {

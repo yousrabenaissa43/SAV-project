@@ -1,6 +1,8 @@
 package afriqueMed.business;
 
 import afriqueMed.domain.Ticket.Intervention;
+import afriqueMed.domain.equipement.Item;
+import afriqueMed.domain.equipement.ItemStatus;
 import afriqueMed.domain.historyLog.ActionType;
 import afriqueMed.domain.historyLog.HistoryLog;
 import afriqueMed.infra.operations.InterventionRepository;
@@ -37,7 +39,6 @@ public class TechnicianService {
 
         HistoryLog log = new HistoryLog();
         log.setIntervention(intervention);
-        log.setTicket(intervention.getTicket());
         log.setUser(intervention.getTechnician()); // Assuming Technician extends User
         log.setAction(ActionType.INTERVENTION_COMPLETED);
         log.setLogMessage("Intervention #" + interventionId + " completed by technician " +
@@ -54,5 +55,45 @@ public class TechnicianService {
     public List<Intervention> getScheduledInterventions(Long technicianId) {
         return interventionRepository.findByTechnicianIdAndIsDoneFalse(technicianId);
     }
+    @Transactional
+    public boolean markItemToBeDecommissioned(Long interventionId, String reason) {
+        Intervention intervention = interventionRepository.findById(interventionId);
+//        if (intervention == null || intervention.isDone()) {
+//            return false;
+//        }
+
+        Item item = intervention.getItem();
+        item.setItemStatus(ItemStatus.DECOMMISSONNED);
+        intervention.setSetItemToBeDecommissioned(true);
+        String existingNotes = intervention.getTechnicianNotes() != null ? intervention.getTechnicianNotes() + "\n" : "";
+        String newNote = "REASON TO BE DECOMMISSIONED: " + reason;
+        intervention.setTechnicianNotes(existingNotes + newNote);
+
+        interventionRepository.save(intervention);
+
+        // Log the action
+        LocalDateTime now = LocalDateTime.now();
+        String formattedTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        HistoryLog log = new HistoryLog();
+        log.setIntervention(intervention);
+        log.setUser(intervention.getTechnician());
+        log.setAction(ActionType.INTERVENTION_UPDATED);
+        log.setLogMessage(
+                String.format(
+                        "Technician '%s' marked the item '%s' (ID: %d) as DECOMMISSIONED during intervention ID: %d on %s. Reason provided: \"%s\".",
+                        intervention.getTechnician().getName(),
+                        item.getBasicinfo().getName(),
+                        item.getId(),
+                        intervention.getId(),
+                        formattedTime,
+                        reason
+                )
+        );
+        log.setTimestamp(now);
+        historyLogService.createHistoryLog(log);
+
+        return true;
+    }
+
 }
 

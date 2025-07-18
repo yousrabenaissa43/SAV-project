@@ -4,6 +4,7 @@ import afriqueMed.business.TechnicianService;
 import afriqueMed.domain.Ticket.Intervention;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class TechnicianResource {
     @Inject
     TechnicianService technicianService;
 
+    //tested
     @POST
     @Path("/interventions/{id}/complete")
     public Response completeIntervention(@PathParam("id") Long id, @QueryParam("notes") String notes) {
@@ -25,11 +27,24 @@ public class TechnicianResource {
                     .entity("Intervention not found or already completed").build();
         }
     }
-//tested
+   //tested
     @GET
     @Path("/{technicianId}/interventions/scheduled")
     public Response getScheduledInterventions(@PathParam("technicianId") Long technicianId) {
         List<Intervention> interventions = technicianService.getScheduledInterventions(technicianId);
         return Response.ok(interventions).build();
     }
+    //tested
+    @PATCH
+    @Path("/{id}/decommission")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response markItemToBeDecommissioned(@PathParam("id") Long id, String reason) {
+        boolean success = technicianService.markItemToBeDecommissioned(id, reason);
+        if (success) {
+            return Response.ok("Item marked for decommissioning.").build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Failed to mark item as decommissioned.").build();
+        }
+    }
+
 }

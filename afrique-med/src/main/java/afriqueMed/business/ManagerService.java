@@ -44,7 +44,7 @@ public class ManagerService {
         }
 
         Intervention intervention = new Intervention();
-        intervention.setTicket(ticket);
+        intervention.setItem(ticket.getItem());
         intervention.setTechnician(technician);
         intervention.setStartDate(LocalDateTime.now());
         intervention.setDone(false);
