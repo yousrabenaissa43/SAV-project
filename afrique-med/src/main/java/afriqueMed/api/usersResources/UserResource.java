@@ -3,6 +3,7 @@ package afriqueMed.api.usersResources;
 import afriqueMed.business.UserService;
 import afriqueMed.domain.DTO.TechnicianCreationRequest;
 import afriqueMed.domain.DTO.UpdateUserRequest;
+import afriqueMed.domain.users.Client;
 import afriqueMed.domain.users.Technician;
 import afriqueMed.domain.users.User;
 import jakarta.inject.Inject;
@@ -35,6 +36,16 @@ public class UserResource {
     @GET
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+    @GET
+    @Path("/clients")
+    public List<Client> getAllClients() {
+        return userService.getAllClients();
+    }
+    @GET
+    @Path("/technicians")
+    public List<Technician> getAllTechnicians() {
+        return userService.getAllTechnician();
     }
 
     @DELETE
