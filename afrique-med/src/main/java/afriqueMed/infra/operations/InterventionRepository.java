@@ -5,6 +5,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -49,5 +51,15 @@ public class InterventionRepository {
                 .setParameter("technicianId", technicianId)
                 .getResultList();
     }
+    public List<Intervention> findByStartDateBetween(LocalDateTime start, LocalDateTime end) {
+        return em.createQuery(
+                        "SELECT i FROM Intervention i WHERE i.startDate >= :start AND i.startDate < :end", Intervention.class)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .getResultList();
+    }
+
+
+
 
 }

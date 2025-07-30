@@ -1,5 +1,6 @@
 package afriqueMed.business;
 
+import afriqueMed.domain.Ticket.Intervention;
 import afriqueMed.domain.Ticket.Status;
 import afriqueMed.domain.Ticket.TicketType;
 import afriqueMed.domain.equipement.ItemStatus;
@@ -87,7 +88,7 @@ public class StatisticsService {
     }
 
 
-    // 7. Action counts by type
+    //  Action counts by type
     public Map<String, Long> getActionCountsByType() {
         return historyLogRepository.findAll()
                 .stream()
@@ -97,7 +98,7 @@ public class StatisticsService {
                 ));
     }
 
-    // 8. Top clients by ticket count
+    // Top clients by ticket count
     public Map<String, Long> getTopClientsByTicketCount(int topN) {
         return ticketRepository.findAll()
                 .stream()
@@ -117,7 +118,7 @@ public class StatisticsService {
                 ));
     }
 
-    // 9. Average resolution time (hours)
+    // Average resolution time (hours)
     public double getAverageResolutionTimeHours() {
         return interventionRepository.findAll()
                 .stream()
@@ -127,7 +128,7 @@ public class StatisticsService {
                 .orElse(0.0);
     }
 
-    // 10. Monthly ticket trend
+    //  Monthly ticket trend
     public Map<String, Long> getMonthlyTicketTrends(int monthsBack) {
         LocalDate now = LocalDate.now();
         LocalDate start = now.minusMonths(monthsBack);
@@ -140,5 +141,12 @@ public class StatisticsService {
                         Collectors.counting()
                 ));
     }
+    public double getAverageInterventionsPerDay(LocalDate start, LocalDate end) {
+        List<Intervention> interventions = interventionRepository.findByStartDateBetween(start.atStartOfDay(), end.plusDays(1).atStartOfDay());
+        long daysBetween = ChronoUnit.DAYS.between(start, end) + 1; // include both start and end days
+        return daysBetween == 0 ? 0 : (double) interventions.size() / daysBetween;
+    }
+
+
 }
 
