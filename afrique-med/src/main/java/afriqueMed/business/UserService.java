@@ -97,8 +97,7 @@ public class UserService{
         technicianRepository.save(technician);
         return technician;
     }
-
-
-
-
+    public User findByKeycloakId(String keycloakId) {
+        return userRepository.findByKeycloakId(keycloakId);
+    }
 }

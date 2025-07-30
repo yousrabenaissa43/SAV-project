@@ -32,6 +32,17 @@ public class UserResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    @GET
+    @Path("/get-user-by-keycloakid/{kcId}")
+    public Response getUserByKeycloakId(@PathParam("kcId") String kcId) {
+        User user = userService.findByKeycloakId(kcId);
+        if (user != null) {
+            return Response.ok(user).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
 
     @GET
     public List<User> getAllUsers() {
