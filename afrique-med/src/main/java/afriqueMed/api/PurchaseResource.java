@@ -1,6 +1,7 @@
 package afriqueMed.api;
 
 import afriqueMed.business.PurchaseService;
+import afriqueMed.domain.DTO.PurchaseDTO;
 import afriqueMed.domain.Purchase;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -16,10 +17,15 @@ public class PurchaseResource {
     PurchaseService purchaseService;
 
     @POST
-    public Response createPurchase(Purchase purchase) {
-        purchaseService.createPurchase(purchase);
-        return Response.status(Response.Status.CREATED).entity(purchase).build();
+    public Response createPurchase(PurchaseDTO dto) {
+        try {
+            purchaseService.createPurchase(dto);
+            return Response.status(Response.Status.CREATED).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
+
 
     @GET
     @Path("/{id}")
