@@ -39,6 +39,7 @@ public class ManagerService {
         }
         ticket.setStatus(Status.ACCEPTED);
         Technician technician = technicianRepository.findById(technicianId);
+
         if (technician == null) {
             throw new IllegalArgumentException("Technician not found with ID: " + technicianId);
         }
@@ -48,7 +49,7 @@ public class ManagerService {
         intervention.setTechnician(technician);
         intervention.setStartDate(LocalDateTime.now());
         intervention.setDone(false);
-
+        intervention.setAddress(ticket.getLocation());
         interventionRepository.save(intervention);
 
         // 3. Log ticket acceptance

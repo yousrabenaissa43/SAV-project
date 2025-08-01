@@ -20,6 +20,9 @@ public class Intervention {
     @ManyToOne(optional = false)
     private Technician technician;
 
+    @Column(nullable = true)
+    private String address;
+
     private boolean isDone = false;
     private boolean setItemToBeDecommissioned = false;
 
@@ -103,5 +106,13 @@ public class Intervention {
 
     public void setAttachments(List<String> attachments) {
         this.attachments = attachments;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
