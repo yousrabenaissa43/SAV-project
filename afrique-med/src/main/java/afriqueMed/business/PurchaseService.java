@@ -7,9 +7,11 @@ import afriqueMed.domain.users.Client;
 import afriqueMed.infra.equipmentrepos.ItemRepository;
 import afriqueMed.infra.equipmentrepos.PurchaseRepository;
 import afriqueMed.infra.usersRepos.ClientRepository;
+import afriqueMed.infra.usersRepos.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -58,4 +60,25 @@ public class PurchaseService {
             purchaseRepository.delete(purchase);
         }
     }
+    @Transactional
+    public void updatePurchase(Long id, PurchaseDTO dto) {
+        Purchase purchase = purchaseRepository.findById(id);
+        if (purchase == null) {
+            throw new NotFoundException("Purchase not found with ID " + id);
+        }
+
+        // Update fields
+        if (dto.clientId() != null) {
+            purchase.setClient(clientRepository.findById(dto.clientId()));
+        }
+        if (dto.itemId() != null) {
+            purchase.setItem(itemRepository.findById(dto.itemId()));
+        }
+        purchase.setPurchaseDate(dto.purchaseDate());
+        purchase.setWarrantyEndDate(dto.warrantyEndDate());
+        purchase.setInterventionSheet(dto.interventionSheet());
+
+        purchaseRepository.save(purchase);
+    }
+
 }

@@ -49,4 +49,17 @@ public class PurchaseResource {
         purchaseService.deletePurchase(id);
         return Response.noContent().build();
     }
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePurchase(@PathParam("id") Long id, PurchaseDTO dto) {
+        try {
+            purchaseService.updatePurchase(id, dto);
+            return Response.ok().build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
 }
