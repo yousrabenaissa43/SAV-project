@@ -42,4 +42,11 @@ public class InterventionResource {
         interventionService.deleteIntervention(id);
         return Response.noContent().build();
     }
+    @GET
+    @Path("/undone")
+    public Response getUndoneInterventions() {
+        List<Intervention> undone = interventionService.getUndoneInterventions();
+        return Response.ok(undone).build();
+    }
+
 }

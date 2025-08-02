@@ -58,6 +58,11 @@ public class InterventionRepository {
                 .setParameter("end", end)
                 .getResultList();
     }
+    public List<Intervention> findUndoneInterventions() {
+        return em.createQuery("SELECT i FROM Intervention i WHERE i.isDone = false", Intervention.class)
+                .getResultList();
+    }
+
 
 
 

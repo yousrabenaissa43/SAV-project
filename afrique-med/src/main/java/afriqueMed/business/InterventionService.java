@@ -34,4 +34,8 @@ public class InterventionService {
             interventionRepository.delete(intervention);
         }
     }
+    public List<Intervention> getUndoneInterventions() {
+        return interventionRepository.findUndoneInterventions();
+    }
+
 }
