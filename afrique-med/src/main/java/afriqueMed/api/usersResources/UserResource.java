@@ -1,5 +1,6 @@
 package afriqueMed.api.usersResources;
 
+import afriqueMed.business.PurchaseService;
 import afriqueMed.business.UserService;
 import afriqueMed.domain.DTO.TechnicianCreationRequest;
 import afriqueMed.domain.DTO.UpdateUserRequest;
@@ -21,6 +22,9 @@ public class UserResource {
 
     @Inject
     UserService userService;
+    @Inject
+    PurchaseService purchaseService;
+
 
     @GET
     @Path("/{id}")

@@ -80,5 +80,8 @@ public class PurchaseService {
 
         purchaseRepository.save(purchase);
     }
+    public List<Item> getItemsPurchasedByClient(Long clientId) {
+        return purchaseRepository.findItemsByClientId(clientId);
+    }
 
 }

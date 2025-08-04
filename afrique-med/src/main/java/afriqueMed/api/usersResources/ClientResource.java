@@ -2,6 +2,7 @@ package afriqueMed.api.usersResources;
 
 
 import afriqueMed.business.ClientService;
+import afriqueMed.business.PurchaseService;
 import afriqueMed.domain.DTO.CreateTicketRequest;
 import afriqueMed.domain.Ticket.Ticket;
 import jakarta.inject.Inject;
@@ -13,6 +14,8 @@ public class ClientResource {
 
     @Inject
     ClientService clientService;
+    @Inject
+    PurchaseService purchaseService;
 
     @POST
     @Path("/{clientId}/ticket")
@@ -25,5 +28,11 @@ public class ClientResource {
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Failed to create ticket").build();
         }
+    }
+    @GET
+    @Path("/{id}/purchases")
+    public Response getClientPurchases(@PathParam("id") Long clientId) {
+        var items = purchaseService.getItemsPurchasedByClient(clientId);
+        return Response.ok(items).build();
     }
 }

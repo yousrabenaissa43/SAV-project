@@ -1,6 +1,7 @@
 package afriqueMed.infra.equipmentrepos;
 
 import afriqueMed.domain.Purchase;
+import afriqueMed.domain.equipement.Item;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -35,6 +36,12 @@ public class PurchaseRepository {
 
     public List<Purchase> findByClientId(Long clientId) {
         return em.createQuery("SELECT p FROM Purchase p WHERE p.client.id = :clientId", Purchase.class)
+                .setParameter("clientId", clientId)
+                .getResultList();
+    }
+    public List<Item> findItemsByClientId(Long clientId) {
+        return em.createQuery(
+                        "SELECT p.item FROM Purchase p WHERE p.client.id = :clientId", Item.class)
                 .setParameter("clientId", clientId)
                 .getResultList();
     }
