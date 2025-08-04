@@ -64,6 +64,18 @@ public class UserService{
         userRepository.save(newUser);
         return newUser;
     }
+    public Client createClient(String keycloakId, String CIN, String name, String address, String phone) {
+        Client client = new Client();
+        client.setKeycloakId(keycloakId);
+        client.setCIN(CIN);
+        client.setName(name);
+        client.setAddress(address);
+        client.setPhone(phone);
+
+        clientRepository.save(client);
+        return client;
+    }
+
     @Transactional
     public User updateUser(Long id, String keycloakId, String CIN, String name, String address, String phone) {
         User user = userRepository.findById(id);

@@ -32,6 +32,20 @@ public class UserResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    @POST
+    @Path("/clients/create")
+    @Transactional
+    public Response createClient(UpdateUserRequest request) {
+        Client client = userService.createClient(
+                request.keycloakId(),
+                request.CIN(),
+                request.name(),
+                request.address(),
+                request.phone()
+        );
+        return Response.ok(client).build();
+    }
+
     @GET
     @Path("/get-user-by-keycloakid/{kcId}")
     public Response getUserByKeycloakId(@PathParam("kcId") String kcId) {
