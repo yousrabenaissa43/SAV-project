@@ -114,6 +114,11 @@ public class UserResource {
         );
         return Response.ok(technician).build();
     }
+    @GET
+    @Path("/technicians/available")
+    public List<Technician> getAvailableTechnicians() {
+        return userService.getAvailableTechnicians();
+    }
 
 
 }

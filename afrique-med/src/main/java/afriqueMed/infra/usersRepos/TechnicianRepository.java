@@ -45,4 +45,9 @@ public class TechnicianRepository {
                 .setParameter("location", location)
                 .getResultList();
     }
+    public List<Technician> findAvailableTechnicians() {
+        return em.createQuery("SELECT t FROM Technician t WHERE t.isOnVacation = false", Technician.class)
+                .getResultList();
+    }
+
 }

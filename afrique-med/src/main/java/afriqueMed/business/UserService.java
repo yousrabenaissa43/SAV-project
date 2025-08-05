@@ -112,4 +112,8 @@ public class UserService{
     public User findByKeycloakId(String keycloakId) {
         return userRepository.findByKeycloakId(keycloakId);
     }
+    public List<Technician> getAvailableTechnicians() {
+        return technicianRepository.findAvailableTechnicians();
+    }
+
 }
