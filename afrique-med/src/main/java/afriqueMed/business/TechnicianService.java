@@ -9,6 +9,7 @@ import afriqueMed.infra.operations.InterventionRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.WebApplicationException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,18 +22,19 @@ public class TechnicianService {
     InterventionRepository interventionRepository;
     @Inject
     HistoryLogService historyLogService;
+    @Inject
+    InterventionService interventionService;
     /**
      * Marks an intervention as done and adds technician notes + end date.
      */
     @Transactional
-    public boolean completeIntervention(Long interventionId, String notes) {
+    public boolean completeIntervention(Long interventionId) {
         Intervention intervention = interventionRepository.findById(interventionId);
         if (intervention == null || intervention.isDone()) {
             return false;
         }
         intervention.setDone(true);
         intervention.setEndDate(LocalDateTime.now());
-        intervention.setTechnicianNotes(notes);
         interventionRepository.save(intervention);
         // Log time in message
         LocalDateTime completionTime = LocalDateTime.now();
@@ -94,6 +96,23 @@ public class TechnicianService {
 
         return true;
     }
+    @Transactional
+    public void addNotes(Long interventionId, String newNotes) {
+        Intervention intervention = interventionService.getIntervention(interventionId);
+        if (intervention == null) {
+            throw new WebApplicationException("Intervention not found", 404);
+        }
+
+        String existingNotes = intervention.getTechnicianNotes();
+        if (existingNotes == null || existingNotes.isBlank()) {
+            intervention.setTechnicianNotes(newNotes);
+        } else {
+            intervention.setTechnicianNotes(existingNotes + "\n"+ intervention.getTechnician().getName()+ ":"+ newNotes);
+        }
+
+        interventionService.save(intervention);
+    }
+
 
 }
 

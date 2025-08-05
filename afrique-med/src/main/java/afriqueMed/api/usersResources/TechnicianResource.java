@@ -15,11 +15,10 @@ public class TechnicianResource {
     @Inject
     TechnicianService technicianService;
 
-    //tested
     @POST
     @Path("/interventions/{id}/complete")
-    public Response completeIntervention(@PathParam("id") Long id, @QueryParam("notes") String notes) {
-        boolean success = technicianService.completeIntervention(id, notes);
+    public Response completeIntervention(@PathParam("id") Long id) {
+        boolean success = technicianService.completeIntervention(id);
         if (success) {
             return Response.ok("Intervention marked as complete").build();
         } else {
@@ -27,7 +26,8 @@ public class TechnicianResource {
                     .entity("Intervention not found or already completed").build();
         }
     }
-   //tested
+
+    //tested
     @GET
     @Path("/{technicianId}/interventions/scheduled")
     public Response getScheduledInterventions(@PathParam("technicianId") Long technicianId) {
@@ -46,5 +46,13 @@ public class TechnicianResource {
             return Response.status(Response.Status.BAD_REQUEST).entity("Failed to mark item as decommissioned.").build();
         }
     }
+    @PUT
+    @Path("/interventions/{id}/notes")
+    @Consumes("text/plain")
+    public Response addNotes(@PathParam("id") Long id, String notes) {
+        technicianService.addNotes(id, notes);
+        return Response.ok().build();
+    }
+
 
 }

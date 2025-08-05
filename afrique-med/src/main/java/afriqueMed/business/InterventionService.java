@@ -20,6 +20,11 @@ public class InterventionService {
     HistoryLogService historyLogService;
 
     @Transactional
+    public void save(Intervention intervention) {
+         interventionRepository.save(intervention);
+    }
+
+    @Transactional
     public void createIntervention(Intervention intervention) {
         interventionRepository.save(intervention);
 
@@ -77,6 +82,7 @@ public class InterventionService {
             historyLogService.createHistoryLog(log);
         }
     }
+
 
     public List<Intervention> getUndoneInterventions() {
         return interventionRepository.findUndoneInterventions();
