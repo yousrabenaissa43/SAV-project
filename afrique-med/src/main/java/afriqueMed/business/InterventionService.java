@@ -3,10 +3,13 @@ package afriqueMed.business;
 import afriqueMed.domain.Ticket.Intervention;
 import afriqueMed.domain.historyLog.ActionType;
 import afriqueMed.domain.historyLog.HistoryLog;
+import afriqueMed.domain.users.Technician;
 import afriqueMed.infra.operations.InterventionRepository;
+import afriqueMed.infra.usersRepos.TechnicianRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +21,8 @@ public class InterventionService {
     InterventionRepository interventionRepository;
     @Inject
     HistoryLogService historyLogService;
+    @Inject
+    TechnicianRepository technicianRepository;
 
     @Transactional
     public void save(Intervention intervention) {
@@ -83,9 +88,23 @@ public class InterventionService {
         }
     }
 
-
     public List<Intervention> getUndoneInterventions() {
         return interventionRepository.findUndoneInterventions();
+    }
+    @Transactional
+    public void updateTechnician(Long interventionId, Long technicianId) {
+        Intervention intervention = interventionRepository.findById(interventionId);
+        if (intervention == null) {
+            throw new NotFoundException("Intervention not found");
+        }
+
+        Technician technician = technicianRepository.findById(technicianId);
+        if (technician == null) {
+            throw new NotFoundException("Technician not found");
+        }
+
+        intervention.setTechnician(technician);
+        interventionRepository.save(intervention);
     }
 
 }

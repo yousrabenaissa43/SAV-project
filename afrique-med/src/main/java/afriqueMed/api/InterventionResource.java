@@ -48,5 +48,20 @@ public class InterventionResource {
         List<Intervention> undone = interventionService.getUndoneInterventions();
         return Response.ok(undone).build();
     }
+    @PUT
+    @Path("/{id}/technician")
+    @Consumes("text/plain")
+    public Response updateTechnician(@PathParam("id") Long id, String technicianIdString) {
+        try {
+            long technicianId = Long.parseLong(technicianIdString.trim());
+            interventionService.updateTechnician(id, technicianId);
+            return Response.ok().build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid technician ID").build();
+        }
+    }
+
+
+
 
 }

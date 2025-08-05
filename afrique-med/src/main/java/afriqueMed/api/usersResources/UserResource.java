@@ -115,4 +115,5 @@ public class UserResource {
         return Response.ok(technician).build();
     }
 
+
 }
