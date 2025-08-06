@@ -119,6 +119,16 @@ public class UserResource {
     public List<Technician> getAvailableTechnicians() {
         return userService.getAvailableTechnicians();
     }
+    @PATCH
+    @Path("/technicians/{id}/vacation")
+    @Transactional
+    public Response setTechnicianVacationStatus(@PathParam("id") Long technicianId, boolean onVacation) {
+        Technician updatedTechnician = userService.setTechnicianVacationStatus(technicianId, onVacation);
+        if (updatedTechnician == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(updatedTechnician).build();
+    }
 
 
 }

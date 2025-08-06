@@ -115,5 +115,14 @@ public class UserService{
     public List<Technician> getAvailableTechnicians() {
         return technicianRepository.findAvailableTechnicians();
     }
+    public Technician setTechnicianVacationStatus(Long technicianId, boolean onVacation) {
+        Technician technician = technicianRepository.findById(technicianId);
+        if (technician == null) {
+            return null;
+        }
+        technician.setOnVacation(onVacation);
+        return technician;
+    }
+
 
 }
