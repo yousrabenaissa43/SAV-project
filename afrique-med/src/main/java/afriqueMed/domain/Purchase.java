@@ -18,7 +18,7 @@ public class Purchase {
     @ManyToOne(optional = false)
     private Client client;
 
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Item item;
 
     private LocalDate purchaseDate;

@@ -65,7 +65,7 @@ public class TechnicianService {
 //        }
 
         Item item = intervention.getItem();
-        item.setItemStatus(ItemStatus.DECOMMISSONNED);
+        item.setItemStatus(ItemStatus.DECOMMISSIONED);
         intervention.setSetItemToBeDecommissioned(true);
         String existingNotes = intervention.getTechnicianNotes() != null ? intervention.getTechnicianNotes() + "\n" : "";
         String newNote = "REASON TO BE DECOMMISSIONED: " + reason;

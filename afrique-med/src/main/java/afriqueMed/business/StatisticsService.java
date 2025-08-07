@@ -83,7 +83,7 @@ public class StatisticsService {
     public long countDecommissionedItems() {
         return itemRepository.findAll()
                 .stream()                                      //mistyped / to be corrected later
-                .filter(item -> item.getItemStatus() == ItemStatus.DECOMMISSONNED)
+                .filter(item -> item.getItemStatus() == ItemStatus.DECOMMISSIONED)
                 .count();
     }
 

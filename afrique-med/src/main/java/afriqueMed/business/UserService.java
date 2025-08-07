@@ -115,6 +115,7 @@ public class UserService{
     public List<Technician> getAvailableTechnicians() {
         return technicianRepository.findAvailableTechnicians();
     }
+    @Transactional
     public Technician setTechnicianVacationStatus(Long technicianId, boolean onVacation) {
         Technician technician = technicianRepository.findById(technicianId);
         if (technician == null) {
