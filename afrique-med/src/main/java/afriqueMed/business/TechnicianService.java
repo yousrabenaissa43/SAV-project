@@ -105,7 +105,7 @@ public class TechnicianService {
 
         String existingNotes = intervention.getTechnicianNotes();
         if (existingNotes == null || existingNotes.isBlank()) {
-            intervention.setTechnicianNotes(newNotes);
+            intervention.setTechnicianNotes(intervention.getTechnician().getName()+ ":"+ newNotes);
         } else {
             intervention.setTechnicianNotes(existingNotes + "\n"+ intervention.getTechnician().getName()+ ":"+ newNotes);
         }
