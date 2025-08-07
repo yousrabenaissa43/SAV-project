@@ -33,4 +33,15 @@ public class ItemService {
             itemRepository.delete(item);
         }
     }
+    @Transactional
+    public Item updateItem(Item item) {
+        Item existing = getItem(item.getId());
+        if (existing == null) {
+            return null;
+        }
+        // copy fields from item to existing or just save if using JPA merge
+        itemRepository.save(item);
+        return item;
+    }
+
 }
