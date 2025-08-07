@@ -50,6 +50,7 @@ public class ManagerService {
         intervention.setStartDate(LocalDateTime.now());
         intervention.setDone(false);
         intervention.setAddress(ticket.getLocation());
+        intervention.setTicketType(ticket.getTicketType());
         interventionRepository.save(intervention);
 
         // 3. Log ticket acceptance

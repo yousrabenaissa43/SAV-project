@@ -29,6 +29,11 @@ public class Intervention {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private TicketType ticketType;
+
+
     @Column(length = 1000)
     private String technicianNotes;
 
@@ -114,5 +119,13 @@ public class Intervention {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 }
