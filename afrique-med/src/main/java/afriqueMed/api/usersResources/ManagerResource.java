@@ -3,6 +3,7 @@ package afriqueMed.api.usersResources;
 
 import afriqueMed.business.ManagerService;
 import afriqueMed.domain.Ticket.Intervention;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
@@ -13,6 +14,8 @@ public class ManagerResource {
     @Inject
     ManagerService managerService;
 
+
+    @RolesAllowed("admin")
     @POST
     @Path("/ticket/accept")
     public Response acceptTicket(
