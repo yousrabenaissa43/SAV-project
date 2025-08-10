@@ -1,6 +1,7 @@
 package afriqueMed.infra.operations;
 
 import afriqueMed.domain.Ticket.Intervention;
+import afriqueMed.domain.Ticket.Status;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -44,13 +45,15 @@ public class InterventionRepository {
                 .setParameter("ticketId", ticketId)
                 .getSingleResult();
     }
-    public List<Intervention> findByTechnicianIdAndIsDoneFalse(Long technicianId) {
+    public List<Intervention> findByTechnicianIdAndStatusInProgress(Long technicianId) {
         return em.createQuery(
-                        "SELECT i FROM Intervention i WHERE i.technician.id = :technicianId AND i.isDone = false",
+                        "SELECT i FROM Intervention i WHERE i.technician.id = :technicianId AND i.status = :inProgressStatus",
                         Intervention.class)
                 .setParameter("technicianId", technicianId)
+                .setParameter("inProgressStatus", Status.IN_PROGRESS)
                 .getResultList();
     }
+
     public List<Intervention> findByStartDateBetween(LocalDateTime start, LocalDateTime end) {
         return em.createQuery(
                         "SELECT i FROM Intervention i WHERE i.startDate >= :start AND i.startDate < :end", Intervention.class)
@@ -59,7 +62,9 @@ public class InterventionRepository {
                 .getResultList();
     }
     public List<Intervention> findUndoneInterventions() {
-        return em.createQuery("SELECT i FROM Intervention i WHERE i.isDone = false", Intervention.class)
+        return em.createQuery(
+                        "SELECT i FROM Intervention i WHERE i.status = :inProgressStatus", Intervention.class)
+                .setParameter("inProgressStatus", Status.IN_PROGRESS)
                 .getResultList();
     }
 

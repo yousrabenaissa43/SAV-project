@@ -48,7 +48,7 @@ public class ManagerService {
         intervention.setItem(ticket.getItem());
         intervention.setTechnician(technician);
         intervention.setStartDate(LocalDateTime.now());
-        intervention.setDone(false);
+        intervention.setStatus(Status.IN_PROGRESS);
         intervention.setAddress(ticket.getLocation());
         intervention.setTicketType(ticket.getTicketType());
         interventionRepository.save(intervention);

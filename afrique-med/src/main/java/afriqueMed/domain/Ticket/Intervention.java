@@ -23,7 +23,10 @@ public class Intervention {
     @Column(nullable = true)
     private String address;
 
-    private boolean isDone = false;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private Status status;
+
     private boolean setItemToBeDecommissioned = false;
 
     private LocalDateTime startDate;
@@ -65,12 +68,12 @@ public class Intervention {
         this.technician = technician;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public boolean isSetItemToBeDecommissioned() {

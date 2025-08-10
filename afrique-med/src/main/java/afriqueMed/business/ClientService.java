@@ -54,7 +54,7 @@ public class ClientService {
         ticket.setDescription(request.description());
         ticket.setCountry(request.country());
         ticket.setDate(LocalDateTime.now());
-        ticket.setStatus(Status.OUVERT);
+        ticket.setStatus(Status.PENDING);
         ticket.setPriority(Priority.HIGH);
 
 

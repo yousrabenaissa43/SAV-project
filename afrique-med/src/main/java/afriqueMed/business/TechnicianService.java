@@ -1,6 +1,7 @@
 package afriqueMed.business;
 
 import afriqueMed.domain.Ticket.Intervention;
+import afriqueMed.domain.Ticket.Status;
 import afriqueMed.domain.equipement.Item;
 import afriqueMed.domain.equipement.ItemStatus;
 import afriqueMed.domain.historyLog.ActionType;
@@ -30,10 +31,10 @@ public class TechnicianService {
     @Transactional
     public boolean completeIntervention(Long interventionId) {
         Intervention intervention = interventionRepository.findById(interventionId);
-        if (intervention == null || intervention.isDone()) {
+        if (intervention == null || intervention.getStatus()== Status.RESOLVED) {
             return false;
         }
-        intervention.setDone(true);
+        intervention.setStatus(Status.RESOLVED);
         intervention.setEndDate(LocalDateTime.now());
         interventionRepository.save(intervention);
         // Log time in message
@@ -55,7 +56,7 @@ public class TechnicianService {
      * Returns all scheduled interventions (not done) for a given technician.
      */
     public List<Intervention> getScheduledInterventions(Long technicianId) {
-        return interventionRepository.findByTechnicianIdAndIsDoneFalse(technicianId);
+        return interventionRepository.findByTechnicianIdAndStatusInProgress(technicianId);
     }
     @Transactional
     public boolean markItemToBeDecommissioned(Long interventionId, String reason) {

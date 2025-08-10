@@ -1,11 +1,12 @@
 package afriqueMed.domain.Ticket;
 
 public enum Status {
-    OUVERT,
-    EN_COURS,
-    RESOLU,
-    FERME,
+    PENDING,
+    IN_PROGRESS,
+    RESOLVED,
     ACCEPTED,
     REFUSED,
+    CANCELLED
 }
+
 
