@@ -61,15 +61,11 @@ public class TechnicianService {
     @Transactional
     public boolean markItemToBeDecommissioned(Long interventionId, String reason) {
         Intervention intervention = interventionRepository.findById(interventionId);
-//        if (intervention == null || intervention.isDone()) {
-//            return false;
-//        }
-
         Item item = intervention.getItem();
         item.setItemStatus(ItemStatus.DECOMMISSIONED);
         intervention.setSetItemToBeDecommissioned(true);
         String existingNotes = intervention.getTechnicianNotes() != null ? intervention.getTechnicianNotes() + "\n" : "";
-        String newNote = "REASON TO BE DECOMMISSIONED: " + reason;
+        String newNote = intervention.getTechnician().getName()+" added REASON TO BE DECOMMISSIONED: " + reason;
         intervention.setTechnicianNotes(existingNotes + newNote);
 
         interventionRepository.save(intervention);
@@ -108,7 +104,7 @@ public class TechnicianService {
         if (existingNotes == null || existingNotes.isBlank()) {
             intervention.setTechnicianNotes(intervention.getTechnician().getName()+ ":"+ newNotes);
         } else {
-            intervention.setTechnicianNotes(existingNotes + "\n"+ intervention.getTechnician().getName()+ ":"+ newNotes);
+            intervention.setTechnicianNotes(existingNotes + "\n"+ intervention.getTechnician().getName()+ ": "+ newNotes);
         }
 
         interventionService.save(intervention);
