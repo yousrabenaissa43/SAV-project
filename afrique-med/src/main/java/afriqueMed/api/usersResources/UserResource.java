@@ -122,8 +122,26 @@ public class UserResource {
     @PATCH
     @Path("/technicians/{id}/vacation")
     @Transactional
-    public Response setTechnicianVacationStatus(@PathParam("id") Long technicianId, boolean onVacation) {
+    public Response setTechnicianVacationStatus(@PathParam("id") Long technicianId,@QueryParam("onVacation") boolean onVacation) {
         Technician updatedTechnician = userService.setTechnicianVacationStatus(technicianId, onVacation);
+        if (updatedTechnician == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(updatedTechnician).build();
+    }
+    @PUT
+    @Path("/technicians/{id}")
+    @Transactional
+    public Response updateTechnician(@PathParam("id") Long technicianId, TechnicianCreationRequest request) {
+        Technician updatedTechnician = userService.updateTechnician(
+                technicianId,
+                request.name(),
+                request.phone(),
+                request.cin(),
+                request.specialties(),
+                request.location()
+        );
+
         if (updatedTechnician == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

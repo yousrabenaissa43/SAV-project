@@ -124,6 +124,24 @@ public class UserService{
         technician.setOnVacation(onVacation);
         return technician;
     }
+    @Transactional
+    public Technician updateTechnician(Long id, String name, String phone, String cin,
+                                       List<Speciality> specialties, CountryEnum location) {
+        Technician technician = technicianRepository.findById(id);
+        if (technician == null) {
+            return null;
+        }
+
+        if (name != null) technician.setName(name);
+        if (phone != null) technician.setPhone(phone);
+        if (cin != null) technician.setCIN(cin);
+        if (specialties != null) technician.setSpecialities(specialties);
+        if (location != null) technician.setLocation(location);
+
+        technicianRepository.save(technician);
+        return technician;
+    }
+
 
 
 }
