@@ -122,7 +122,8 @@ public class StatisticsService {
     public double getAverageResolutionTimeHours() {
         return interventionRepository.findAll()
                 .stream()
-                .filter(i -> i.isDone() && i.getStartDate() != null && i.getEndDate() != null)
+                // Change filter here:
+                .filter(i -> i.getStatus() == Status.RESOLVED && i.getStartDate() != null && i.getEndDate() != null)
                 .mapToDouble(i -> ChronoUnit.HOURS.between(i.getStartDate(), i.getEndDate()))
                 .average()
                 .orElse(0.0);
