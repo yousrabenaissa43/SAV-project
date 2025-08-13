@@ -26,6 +26,18 @@ public class TechnicianResource {
                     .entity("Intervention not found or already completed").build();
         }
     }
+    @PUT
+    @Path("/interventions/{id}/cancel")
+    public Response cancelIntervention(@PathParam("id") Long id) {
+        boolean success = technicianService.cancelIntervention(id);
+        if (!success) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Intervention not found or already cancelled.")
+                    .build();
+        }
+        return Response.ok("Intervention cancelled successfully.").build();
+    }
+
 
     //tested
     @GET
@@ -53,6 +65,7 @@ public class TechnicianResource {
         technicianService.addNotes(id, notes);
         return Response.ok().build();
     }
+
 
 
 }

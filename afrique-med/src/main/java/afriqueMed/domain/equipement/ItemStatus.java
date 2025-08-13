@@ -4,5 +4,6 @@ public enum ItemStatus {
     AVAILABLE,
     INSTALLED,
     UNDER_REPAIR,
-    DECOMMISSIONED
+    DECOMMISSIONED,
+    PURCHASED
 }

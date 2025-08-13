@@ -3,6 +3,8 @@ package afriqueMed.business;
 import afriqueMed.domain.Ticket.Intervention;
 import afriqueMed.domain.Ticket.Status;
 import afriqueMed.domain.Ticket.Ticket;
+import afriqueMed.domain.Ticket.TicketType;
+import afriqueMed.domain.equipement.ItemStatus;
 import afriqueMed.domain.historyLog.ActionType;
 import afriqueMed.domain.historyLog.HistoryLog;
 import afriqueMed.domain.users.Technician;
@@ -45,6 +47,11 @@ public class ManagerService {
         }
 
         Intervention intervention = new Intervention();
+        if (ticket.getTicketType() == TicketType.MAINTENANCE
+                || ticket.getTicketType() == TicketType.REPAIR) {
+            ticket.getItem().setItemStatus(ItemStatus.UNDER_REPAIR);
+        }
+
         intervention.setItem(ticket.getItem());
         intervention.setTechnician(technician);
         intervention.setStartDate(LocalDateTime.now());

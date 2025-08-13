@@ -51,6 +51,33 @@ public class TechnicianService {
         historyLogService.createHistoryLog(log);
         return true;
     }
+    @Transactional
+    public boolean cancelIntervention(Long id) {
+        Intervention intervention = interventionRepository.findById(id);
+        if (intervention == null || intervention.getStatus() == Status.RESOLVED || intervention.getStatus() == Status.CANCELLED) {
+            return false;
+        }
+
+        intervention.setStatus(Status.CANCELLED);
+        intervention.setEndDate(LocalDateTime.now());
+        interventionRepository.save(intervention);
+
+        // Log time in message
+        LocalDateTime cancellationTime = LocalDateTime.now();
+
+        HistoryLog log = new HistoryLog();
+        log.setIntervention(intervention);
+        log.setUser(intervention.getTechnician()); // Assuming Technician extends User
+        log.setAction(ActionType.INTERVENTION_UPDATED);
+        log.setLogMessage("Intervention #" + id + " cancelled by technician " +
+                intervention.getTechnician().getName() +
+                " at " + cancellationTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ".");
+        log.setTimestamp(cancellationTime);
+        historyLogService.createHistoryLog(log);
+
+        return true;
+    }
+
 
     /**
      * Returns all scheduled interventions (not done) for a given technician.

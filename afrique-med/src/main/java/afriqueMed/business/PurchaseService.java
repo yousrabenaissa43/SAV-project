@@ -3,6 +3,7 @@ package afriqueMed.business;
 import afriqueMed.domain.DTO.PurchaseDTO;
 import afriqueMed.domain.Purchase;
 import afriqueMed.domain.equipement.Item;
+import afriqueMed.domain.equipement.ItemStatus;
 import afriqueMed.domain.users.Client;
 import afriqueMed.infra.equipmentrepos.ItemRepository;
 import afriqueMed.infra.equipmentrepos.PurchaseRepository;
@@ -36,6 +37,7 @@ public class PurchaseService {
 
         Purchase purchase = new Purchase();
         purchase.setClient(client);
+        item.setItemStatus(ItemStatus.PURCHASED);
         purchase.setItem(item);
         purchase.setPurchaseDate(dto.purchaseDate());
         purchase.setWarrantyEndDate(dto.warrantyEndDate());
