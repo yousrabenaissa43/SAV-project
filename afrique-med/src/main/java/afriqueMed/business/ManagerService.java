@@ -59,7 +59,19 @@ public class ManagerService {
         intervention.setAddress(ticket.getLocation());
         intervention.setTicketType(ticket.getTicketType());
         interventionRepository.save(intervention);
+        // --- Create History Log ---
+        HistoryLog log = new HistoryLog();
+        log.setTicket(ticket);
+        log.setIntervention(intervention);
+        log.setUser(technician);
+        log.setAction(ActionType.INTERVENTION_STARTED);
+        log.setLogMessage("Technician " + technician.getName() +
+                " has started working on intervention " + intervention.getId() +
+                " of type " + intervention.getTicketType() +
+                " on " + LocalDateTime.now());
+        log.setTimestamp(LocalDateTime.now());
 
+        historyLogService.createHistoryLog(log);
         return intervention;
     }
     //tested

@@ -49,7 +49,7 @@ public class TechnicianService {
         log.setIntervention(intervention);
         log.setUser(intervention.getTechnician()); // Assuming Technician extends User
         log.setAction(ActionType.INTERVENTION_COMPLETED);
-        log.setLogMessage("Intervention #" + interventionId + " completed by technician " +
+        log.setLogMessage("Intervention #" + interventionId +" of type " + intervention.getTicketType() + "was completed by technician " +
                 intervention.getTechnician().getName() +
                 " at " + completionTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ".");
         log.setTimestamp(completionTime);
@@ -77,7 +77,7 @@ public class TechnicianService {
         log.setIntervention(intervention);
         log.setUser(intervention.getTechnician()); // Assuming Technician extends User
         log.setAction(ActionType.INTERVENTION_UPDATED);
-        log.setLogMessage("Intervention #" + id + " cancelled by technician " +
+        log.setLogMessage("Intervention #" + id +" of type " + intervention.getTicketType() + "was cancelled by technician " +
                 intervention.getTechnician().getName() +
                 " at " + cancellationTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ".");
         log.setTimestamp(cancellationTime);
@@ -141,7 +141,6 @@ public class TechnicianService {
         } else {
             intervention.setTechnicianNotes(existingNotes + "\n"+ intervention.getTechnician().getName()+ ": "+ newNotes);
         }
-
         interventionService.save(intervention);
     }
 
