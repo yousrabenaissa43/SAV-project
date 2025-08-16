@@ -1,0 +1,23 @@
+{
+    "basicinfo": {
+      "name": "Echographe A+B Compact Touch",
+      "description": "",
+      "code": "",
+      "brand": "Quantel Medical",
+      "model": "Compact Touch",
+      "category": "",
+      "serial": 0,
+      "image": ""
+    },
+    "dimensions": {
+      "grossWeight": 0.0,
+      "netWeight": 0.0,
+      "volume": 0.0,
+      "length": 0.0,
+      "width": 0.0,
+      "height": 0.0
+    },
+    "installationDate": "2022-03-10T12:15:50",
+    "itemStatus": "AVAILABLE",
+    "itemResponsibleSpeciality": "RADIOLOGIE"
+  }

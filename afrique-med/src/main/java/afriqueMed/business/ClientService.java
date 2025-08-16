@@ -60,21 +60,6 @@ public class ClientService {
 
         // Save the ticket
         ticketService.createTicket(ticket);
-
-        // Create a history log entry
-        HistoryLog log = new HistoryLog();
-        log.setTicket(ticket);
-        log.setUser(user);
-        log.setAction(ActionType.TICKET_CREATED);
-        log.setLogMessage(
-                "Ticket (ID: " + ticket.getId() + ") was created by client \"" + user.getName() +
-                        "\" on " + LocalDateTime.now()
-        );
-
-        log.setTimestamp(LocalDateTime.now());
-
-        // Save the history log
-        historyLogService.createHistoryLog(log);
         return ticket;
     }
 }

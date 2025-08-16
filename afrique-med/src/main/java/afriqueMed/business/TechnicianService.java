@@ -34,6 +34,11 @@ public class TechnicianService {
         if (intervention == null || intervention.getStatus()== Status.RESOLVED) {
             return false;
         }
+        Item item = intervention.getItem();
+        if (item.getItemStatus() != ItemStatus.DECOMMISSIONED) {
+            item.setItemStatus(ItemStatus.INSTALLED);
+        }
+
         intervention.setStatus(Status.RESOLVED);
         intervention.setEndDate(LocalDateTime.now());
         interventionRepository.save(intervention);
@@ -57,7 +62,10 @@ public class TechnicianService {
         if (intervention == null || intervention.getStatus() == Status.RESOLVED || intervention.getStatus() == Status.CANCELLED) {
             return false;
         }
-
+        Item item = intervention.getItem();
+        if (item.getItemStatus() != ItemStatus.DECOMMISSIONED) {
+            item.setItemStatus(ItemStatus.INSTALLED);
+        }
         intervention.setStatus(Status.CANCELLED);
         intervention.setEndDate(LocalDateTime.now());
         interventionRepository.save(intervention);
